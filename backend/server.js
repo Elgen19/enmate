@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const inmateRouter = require('./routes/inmate');
-
+const taskRouter = require('./routes/task');
 require('dotenv').config();
 
 const app = express();
@@ -23,6 +23,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // CONTROLLERS
 app.use('/inmates', inmateRouter);
+app.use('/task', taskRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

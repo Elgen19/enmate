@@ -3,6 +3,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const inmateSchema = new Schema({
+  inmate_ID:{
+    type: Number,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function(value) {
+        // Check if the INMATE_ID has exactly 8 digits
+        return /^\d{8}$/.test(value.toString());
+      },
+      message: 'INMATE ID must be exactly 8 digits long.'
+    }
+  },
   firstname: {
     type: String,
     required: true
@@ -67,11 +79,6 @@ const inmateSchema = new Schema({
   distinctive_features:{
     type: String,
     required: false
-  },
-  booking_number:{
-    type: Number,
-    required: true,
-    unique: true
   },
   arrest_date:{
     type: Date,

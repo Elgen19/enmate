@@ -9,6 +9,7 @@ router.route('/').get((req, res) => {
 
 router.route('/create-inmate-record').post((req, res) => {
   const {
+    inmate_ID,
     firstname,
     middlename,
     lastname,
@@ -25,7 +26,6 @@ router.route('/create-inmate-record').post((req, res) => {
     eye_color,
     hair_color,
     distinctive_features,
-    booking_number,
     arrest_date,
     arresting_officer,
     location_arrested,
@@ -38,6 +38,7 @@ router.route('/create-inmate-record').post((req, res) => {
   } = req.body;
 
   const newInmateRecord = new InmateRec({
+    inmate_ID,
     firstname,
     middlename,
     lastname,
@@ -54,7 +55,6 @@ router.route('/create-inmate-record').post((req, res) => {
     eye_color,
     hair_color,
     distinctive_features,
-    booking_number,
     arrest_date,
     arresting_officer,
     location_arrested,
@@ -72,9 +72,9 @@ router.route('/create-inmate-record').post((req, res) => {
 });
 
 router.route('/search').get((req, res) => {
-  const bookingNumber = req.query.bookingNumber;
+  const inmateID = req.query.inmateID;
 
-  InmateRec.findOne({ booking_number: bookingNumber })
+  InmateRec.findOne({ inmate_ID: inmateID })
     .then(entry => {
       if (entry) {
         res.json(entry);
@@ -90,7 +90,7 @@ router.route('/search').get((req, res) => {
 // PUT /inmates/update-inmate-record
 router.route('/update-inmate-record').put((req, res) => {
   const {
-    booking_number,
+    inmate_ID,
     firstname,
     middlename,
     lastname,
@@ -119,7 +119,7 @@ router.route('/update-inmate-record').put((req, res) => {
   } = req.body;
 
   // Find the inmate record to update by the booking number
-  InmateRec.findOne({ booking_number })
+  InmateRec.findOne({ inmate_ID })
     .then(inmateRecord => {
       if (!inmateRecord) {
         return res.status(404).json('Inmate record not found');
@@ -161,10 +161,10 @@ router.route('/update-inmate-record').put((req, res) => {
 });
 
 router.route('/delete').delete((req, res) => {
-  const bookingNumber = req.query.bookingNumber;
+  const inmateID = req.query.inmateID;
 
 
-  InmateRec.findOneAndDelete({  booking_number: bookingNumber  })
+  InmateRec.findOneAndDelete({  inmate_ID: inmateID  })
     .then(inmateRecord => {
       if (!inmateRecord) {
         return res.status(404).json('Inmate record not found');

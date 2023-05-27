@@ -40,7 +40,7 @@ function InmateSearch() {
 
         try {
             const response = await axios.get(
-                `http://localhost:8080/inmates/search?bookingNumber=${searchValue}`
+                `http://localhost:8080/inmates/search?inmateID=${searchValue}`
             );
 
             if (response.status === 200) {
@@ -77,7 +77,7 @@ function InmateSearch() {
         eye_color: 'Eye Color',
         hair_color: 'Hair Color',
         distinctive_features: 'Distinctive Features',
-        booking_number: 'Booking Number',
+        inmate_ID: 'Inmate ID',
         arrest_date: 'Date Arrested',
         arresting_officer: 'Arresting Officer',
         location_arrested: 'Location Arrested',
@@ -93,7 +93,7 @@ function InmateSearch() {
     };
 
     return (
-        <Container fluid>
+        <Container>
             <Form onSubmit={handleSearch}>
                 <Row>
                     <Col>
@@ -106,18 +106,22 @@ function InmateSearch() {
                                         </Col>
 
                                         <Col>
-                                            <Nav.Link href = "/InmateUpdateWithDelete" > Update / Delete Record  </Nav.Link>
+                                            <Nav.Link href = "/InmateUpdateWithDelete" > Update / Delete  </Nav.Link>
                                         </Col>
 
                                         <Col>
                                             <Nav.Link href = "/RegisterInmates"> Record Inmate </Nav.Link>
                                         </Col>
 
+                                        <Col className='text-center'>
+                                          <Nav.Link href="/AssignInmateTaskTransaction"> Duty Assignment </Nav.Link>
+                                        </Col>
+
                                         <Col xs={5} >
-                                            <Form.Group controlId="booking_number">
+                                            <Form.Group controlId="inmate_ID">
                                                 <Form.Control
                                                     type="number"
-                                                    placeholder="Enter Booking Number to Update / Delete / View"
+                                                    placeholder="Enter Inmate ID to View Record"
                                                     style={{ width: '90%' }}
                                                     value={searchValue}
                                                     onChange={handleSearchChange}
@@ -137,33 +141,19 @@ function InmateSearch() {
                     </Col>
                 </Row>
             </Form>
-            {/* <Form onSubmit={handleSearch}>
-                <Form.Group controlId="formBasicSearch">
-                    <Form.Label>Booking Number</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Booking Number"
-                        value={searchValue}
-                        onChange={handleSearchChange}
-                    />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Search
-                </Button>
-            </Form> */}
 
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Booking Number</th>
+                        <th>Inmate ID</th>
                         <th>Full Name</th>
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {inmates.map((inmate) => (
                         <tr key={inmate._id}>
-                            <td>{inmate.booking_number}</td>
+                            <td>{inmate.inmate_ID}</td>
                             <td>{inmate.firstname} {inmate.middlename} {inmate.lastname}</td>
                             <td>
                                 <Button
